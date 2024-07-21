@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "fefu-queries"
+version = "0.1.0"
+description = ""
+authors = ["BeaverNotACat <beavernotacat@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+litestar = "^2.9.1"
+beanie = "^1.26.0"
+pydantic = "^2.8.2"
+pydantic-settings = "^2.3.4"
+uvicorn = "^0.30.3"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.4"
+mypy = "^1.11.0"
+pytest = "^8.3.1"
+black = "^24.4.2"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
