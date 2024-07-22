@@ -20,12 +20,10 @@ jobs:
         python-version: "3.12"
         
     - name: ⬇️ Install dependencies
-      working-directory: ./backend
       run: |
         make dev-deps
 
     - name: 🚨 Lint
-      working-directory: ./backend
       run: |
         make lint
     
@@ -42,12 +40,10 @@ jobs:
         python-version: "3.12"
         
     - name: ⬇️ Install dependencies
-      working-directory: ./backend
       run: |
         make dev-deps
 
     - name: 🚨 Test
-      working-directory: ./backend
       run: |
         make lint
 
