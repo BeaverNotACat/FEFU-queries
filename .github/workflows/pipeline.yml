@@ -1,0 +1,72 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: ⬇️ Set up Python 
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+        
+    - name: ⬇️ Install dependencies
+      working-directory: ./backend
+      run: |
+        make dev-deps
+
+    - name: 🚨 Lint
+      working-directory: ./backend
+      run: |
+        make lint
+    
+  test:
+    runs-on: ubuntu-latest
+    needs: [lint]
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: ⬇️ Set up Python 
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+        
+    - name: ⬇️ Install dependencies
+      working-directory: ./backend
+      run: |
+        make dev-deps
+
+    - name: 🚨 Test
+      working-directory: ./backend
+      run: |
+        make lint
+
+  deploy:
+    name: deploy
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+      
+      - name: 🚀 Deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/beaver/FEFU-queries
+            git pull
+            echo "WIP"
