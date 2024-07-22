@@ -7,7 +7,7 @@ dev-deps: deps
 
 lint:
 	poetry run ruff check
-	poetry run mypy app/
+	poetry run mypy app/ --enable-incomplete-feature=NewGenericSyntax
 
 test:
 	echo "WIP"
