@@ -3,10 +3,15 @@ from typing import NewType
 from uuid import UUID
 
 
-ParameterId = NewType("ParameterId", UUID)
-FormId = NewType("FormId", UUID)
-FormPopulationId = NewType("FormPopulationId", UUID)
-UserId = NewType("UserId", str)
+ParameterId = NewType("ParameterId", str)
+FormId = NewType("FormId", str)
+FormPopulationId = NewType("FormPopulationId", str)
+UserEmail = NewType("UserEmail", str)
+
+
+@dataclass
+class User:
+    email: UserEmail
 
 
 @dataclass
@@ -27,7 +32,7 @@ type Parameter = UnidentificatedParameter | IdentificatedParameter
 
 @dataclass
 class _BaseFormPopulation:
-    user_id: UserId
+    user_email: UserEmail
     form_id: FormId
     parameters: list[Parameter]
 

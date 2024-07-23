@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     MONGO_DATABASE: str
 
     @cached_property
-    def postgres_url(self):
+    def mongodb_url(self):
         return f"mongodb://{self.MONGO_USER}:{self.MONGO_PASSWORD}@{self.MONGO_HOST}/{self.MONGO_DATABASE}"
 
 

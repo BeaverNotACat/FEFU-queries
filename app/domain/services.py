@@ -5,7 +5,7 @@ from .models import (
     UnidentificatedFormPopulation,
     Parameter,
     UnidentificatedParameter,
-    UserId,
+    UserEmail,
     FormId,
 )
 
@@ -16,10 +16,10 @@ _sentinel: typing.Any = object()
 class FormPopulationService:
     @staticmethod
     def create(
-        user_id: UserId, form_id: FormId, parameters: list[Parameter] = []
+        user_email: UserEmail, form_id: FormId, parameters: list[Parameter] = []
     ) -> FormPopulation:
         return UnidentificatedFormPopulation(
-            user_id=user_id,
+            user_email=user_email,
             form_id=form_id,
             parameters=parameters,
         )
