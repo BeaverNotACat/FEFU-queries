@@ -1,7 +1,5 @@
 from dataclasses import dataclass
-from typing import NewType
-from uuid import UUID
-
+from typing import NewType, Optional
 
 ParameterId = NewType("ParameterId", str)
 FormId = NewType("FormId", str)
@@ -15,33 +13,15 @@ class User:
 
 
 @dataclass
-class _BaseParameter:
+class Parameter:
     field: str
     answer: str
-
-@dataclass
-class UnidentificatedParameter(_BaseParameter):
-    ...
-
-@dataclass
-class IdentificatedParameter(_BaseParameter):
-    id: ParameterId
-
-type Parameter = UnidentificatedParameter | IdentificatedParameter
+    id: Optional[ParameterId] = None
 
 
 @dataclass
-class _BaseFormPopulation:
+class FormPopulation:
     user_email: UserEmail
     form_id: FormId
     parameters: list[Parameter]
-
-@dataclass
-class UnidentificatedFormPopulation(_BaseFormPopulation):
-    ...
-
-@dataclass
-class IdentificatedFormPopulation(_BaseFormPopulation):
-    id: FormPopulationId
-
-type FormPopulation = UnidentificatedFormPopulation | IdentificatedFormPopulation
+    id: Optional[FormPopulationId] = None
