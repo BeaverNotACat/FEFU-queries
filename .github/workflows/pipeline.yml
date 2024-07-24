@@ -55,14 +55,14 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
       
-      - name: 🚀 Deploy
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /home/beaver/FEFU-queries
-            git pull
-            echo "WIP"
+      # - name: 🚀 Deploy
+      #   uses: appleboy/ssh-action@v1.0.0
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     port: ${{ secrets.PORT }}
+      #     script: |
+      #       cd /home/beaver/FEFU-queries
+      #       git pull
+      #       echo "WIP"
