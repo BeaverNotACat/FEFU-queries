@@ -9,6 +9,11 @@ lint:
 	poetry run ruff check
 	poetry run mypy app/ --enable-incomplete-feature=NewGenericSyntax
 
+format:
+	black app/
+	isort app/
+	ruff format app/
+
 test:
 	echo "WIP"
 
