@@ -5,6 +5,7 @@ ParameterId = NewType("ParameterId", str)
 FormId = NewType("FormId", str)
 FormPopulationId = NewType("FormPopulationId", str)
 UserEmail = NewType("UserEmail", str)
+OauthTocken = NewType("OauthTocken", str)
 
 
 @dataclass

@@ -15,7 +15,7 @@ class FormPopulationGateway(FormPopulationSaver, Protocol): ...
 NewFormPopulationsListDTO = DataFrame
 
 
-class BulkCreateFormPopulation(
+class CreateFormPopulationFromTable(
     Interactor[NewFormPopulationsListDTO, list[FormPopulation]]
 ):
     def __init__(

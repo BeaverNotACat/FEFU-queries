@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Protocol
 
-from app.domain.models import FormId, FormPopulation, UserEmail
+from app.domain.models import FormId, FormPopulation, OauthTocken, User, UserEmail
 
 
 class FormPopulationReader(Protocol):
@@ -30,4 +30,7 @@ class FormPopulationSaver(Protocol):
         raise NotImplementedError
 
 
-class UserProvider(Protocol): ...
+class UserProvider(Protocol):
+    @abstractmethod
+    def get_user(self, oauth_tocken: OauthTocken) -> User:
+        raise NotImplementedError
