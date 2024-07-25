@@ -1,43 +1,16 @@
-import typing
-from csv import DictReader
+from .models import FormPopulation, Parameter, User
 
 
-from app.domain.exceptions import WrongTableFormat
 
-from .models import FormId, FormPopulation, Parameter, UserEmail
-
-_sentinel: typing.Any = object()
-
-
+# TODO refactor
 class FormPopulationService:
-    def _try_to_map_dict(self, data: dict):
-        try:
-            user_email = data["user_email"]
-            del data[user_email]
-            form_id = data["form_id"]
-            del data[form_id]
-            return FormPopulation(
-                user_email=data["user_email"],
-                form_id=data["form_id"],
-                parameters=ParameterService.create_list_from_dict(data),
-            )
-        except KeyError:
-            raise WrongTableFormat
+    @staticmethod
+    def create(data: dict) -> FormPopulation:
+        return FormPopulation(**data)
 
-    def create(
-        self, user_email: UserEmail, form_id: FormId, parameters: list[Parameter] = []
-    ) -> FormPopulation:
-        return FormPopulation(
-            user_email=user_email,
-            form_id=form_id,
-            parameters=parameters,
-        )
-
-    def bulk_create_from_table(self, data: DictReader) -> list[FormPopulation]:
-        populations = []
-        for row in data:
-            populations.append(self._try_to_map_dict(row))
-        return populations
+    @staticmethod
+    def create_list(data: list[dict]) -> list[FormPopulation]:
+        return [FormPopulation(**row) for row in data]
 
     @staticmethod
     def add_parameter(form_population: FormPopulation, parameter: Parameter) -> None:
@@ -46,21 +19,15 @@ class FormPopulationService:
 
 class ParameterService:
     @staticmethod
-    def create(field: str, answer: str) -> Parameter:
-        return Parameter(field=field, answer=answer)
+    def create(data: dict) -> Parameter:
+        return Parameter(**data)
 
     @staticmethod
-    def create_list_from_dict(data: dict[str, str]) -> list[Parameter]:
+    def create_from_dict(data: dict[str, str]) -> list[Parameter]:
         return [Parameter(field=field, answer=answer) for field, answer in data.items()]
 
-    @staticmethod
-    def update(
-        parameter: Parameter,
-        new_field: str = _sentinel,
-        new_answer: str = _sentinel,
-    ) -> None:
-        if new_field is not _sentinel:
-            parameter.field = new_field
 
-        if new_answer is not _sentinel:
-            parameter.answer = new_answer
+class UserService:
+    @staticmethod
+    def create(data: dict) -> User:
+        return User(**data)

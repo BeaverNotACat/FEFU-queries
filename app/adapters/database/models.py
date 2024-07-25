@@ -1,12 +1,12 @@
 from beanie import Document
 
 
-class Parameter(Document):
+class ParameterODM(Document):
     field: str
     answer: str
 
 
-class FormPopulation(Document):
+class FormPopulationODM(Document):
     user_email: str
     form_id: str
-    parameters: list[Parameter]
+    parameters: list[ParameterODM]

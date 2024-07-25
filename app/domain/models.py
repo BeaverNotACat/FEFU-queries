@@ -1,26 +1,29 @@
-from dataclasses import dataclass
 from typing import NewType, Optional
+
+from pydantic import ConfigDict
+from pydantic.dataclasses import dataclass
+
 
 ParameterId = NewType("ParameterId", str)
 FormId = NewType("FormId", str)
 FormPopulationId = NewType("FormPopulationId", str)
 UserEmail = NewType("UserEmail", str)
-OauthTocken = NewType("OauthTocken", str)
+OauthToken = NewType("OauthToken", str)
 
 
-@dataclass
+@dataclass(config=ConfigDict(extra="ignore", from_attributes=True))
 class User:
     email: UserEmail
 
 
-@dataclass
+@dataclass(config=ConfigDict(extra="ignore", from_attributes=True))
 class Parameter:
     field: str
     answer: str
     id: Optional[ParameterId] = None
 
 
-@dataclass
+@dataclass(config=ConfigDict(extra="ignore", from_attributes=True))
 class FormPopulation:
     user_email: UserEmail
     form_id: FormId
