@@ -1,6 +1,5 @@
 from typing import Protocol
-
-from pandas import DataFrame
+from csv import DictReader
 
 from app.application.gateway import FormPopulationSaver
 from app.application.interactor import Interactor
@@ -12,7 +11,7 @@ from app.domain.services import FormPopulationService
 class FormPopulationGateway(FormPopulationSaver, Protocol): ...
 
 
-NewFormPopulationsListDTO = DataFrame
+NewFormPopulationsListDTO = DictReader
 
 
 class CreateFormPopulationFromTable(

@@ -1,6 +1,6 @@
 import typing
+from csv import DictReader
 
-from pandas import DataFrame
 
 from app.domain.exceptions import WrongTableFormat
 
@@ -33,9 +33,9 @@ class FormPopulationService:
             parameters=parameters,
         )
 
-    def bulk_create_from_table(self, data: DataFrame) -> list[FormPopulation]:
+    def bulk_create_from_table(self, data: DictReader) -> list[FormPopulation]:
         populations = []
-        for row in data.to_dict("records"):
+        for row in data:
             populations.append(self._try_to_map_dict(row))
         return populations
 
