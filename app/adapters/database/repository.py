@@ -1,3 +1,5 @@
+from dataclasses import asdict
+
 from app.adapters.database.connection import MongodbSessionManager
 from app.application.gateway import FormPopulationReader, FormPopulationSaver
 from app.domain.models import UserEmail, FormId, FormPopulation
@@ -21,4 +23,7 @@ class FormPopulationGateway(FormPopulationReader, FormPopulationSaver):
     async def bulk_save_form_populations(
         self, populations: list[FormPopulation]
     ) -> list[FormPopulation]:
-        raise NotImplementedError    
+        models = [FormPopulationODM(**asdict(population)) for population in populations]
+        async with self.session:
+            await FormPopulationODM.insert_many(models)
+        return populations
