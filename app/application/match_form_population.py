@@ -30,9 +30,5 @@ class MatchFormPopulations(Interactor[MatchFormIdDTO, list[FormPopulation]]):
 
     async def __call__(self, data: MatchFormIdDTO) -> list[FormPopulation]:
         user = await self.user_provider.get_user(data.tocken)
-        populations = (
-            await self.form_population_db_gateway.get_filtered_form_populations(
-                user_email=user.email, form_id=data.form_id
-            )
-        )
-        return populations
+        return await self.form_population_db_gateway.get_filtered_form_populations(
+                user_email=user.email, form_id=data.form_id)

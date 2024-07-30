@@ -1,20 +1,21 @@
-from app.adapters.database.connection import mongodb_session_factory
+from app.adapters.database.connection import MongodbSessionManager
 from app.application.gateway import FormPopulationReader, FormPopulationSaver
 from app.domain.models import UserEmail, FormId, FormPopulation
 from app.adapters.database.models import FormPopulationODM
 
 class FormPopulationGateway(FormPopulationReader, FormPopulationSaver):
     model = FormPopulationODM
-    session_factory = mongodb_session_factory
+    session_factory = MongodbSessionManager
 
-    async def __init__(self) -> None:
-        await self.session_factory()
+    def __init__(self) -> None:
+        self.session = self.session_factory()
 
     async def get_filtered_form_populations_list(
         self, user_email: UserEmail, form_id: FormId
     ) -> list[FormPopulation]:
-        query = FormPopulationODM.find(FormPopulationODM.user_email == user_email).find(FormPopulationODM.form_id == form_id)
-        result = await query.to_list()
+        async with self.session:
+            query = FormPopulationODM.find(FormPopulationODM.user_email == user_email).find(FormPopulationODM.form_id == form_id)
+            result = await query.to_list()
         return [FormPopulation(**population) for population in result] # type: ignore
 
     async def bulk_save_form_populations(
