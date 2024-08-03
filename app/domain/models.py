@@ -3,7 +3,6 @@ from typing import NewType, Optional
 from pydantic import ConfigDict
 from pydantic.dataclasses import dataclass
 
-
 ParameterId = NewType("ParameterId", str)
 FormId = NewType("FormId", str)
 FormPopulationId = NewType("FormPopulationId", str)

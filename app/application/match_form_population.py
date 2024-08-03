@@ -1,23 +1,16 @@
-from dataclasses import dataclass
 from typing import Protocol
 
 from app.application.gateway import FormPopulationReader, UserProvider
 from app.application.interactor import Interactor
-from app.domain.models import FormId, FormPopulation, OauthToken
+from app.domain.models import FormId, FormPopulation
 from app.domain.services import FormPopulationService
 
 
 class FormPopulationGateway(FormPopulationReader, Protocol): ...
 
 
-@dataclass
-class MatchFormIdDTO:
-    form_id: FormId
-    tocken: OauthToken
-
-
 # TODO Refactor with smart DI
-class MatchFormPopulations(Interactor[MatchFormIdDTO, list[FormPopulation]]):
+class MatchFormPopulations(Interactor[FormId, list[FormPopulation]]):
     def __init__(
         self,
         form_population_db_gateway: FormPopulationGateway,
@@ -28,7 +21,8 @@ class MatchFormPopulations(Interactor[MatchFormIdDTO, list[FormPopulation]]):
         self.form_population_service = form_population_service
         self.user_provider = user_provider
 
-    async def __call__(self, data: MatchFormIdDTO) -> list[FormPopulation]:
-        user = await self.user_provider.get_user(data.tocken)
+    async def __call__(self, form_id: FormId) -> list[FormPopulation]:
+        user = await self.user_provider.get_user()
         return await self.form_population_db_gateway.get_filtered_form_populations(
-                user_email=user.email, form_id=data.form_id)
+            user_email=user.email, form_id=form_id
+        )

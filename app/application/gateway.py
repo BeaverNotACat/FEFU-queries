@@ -1,16 +1,10 @@
 from abc import abstractmethod
 from typing import Protocol
 
-from app.domain.models import FormId, FormPopulation, OauthToken, User, UserEmail
+from app.domain.models import FormId, FormPopulation, User, UserEmail
 
 
 class FormPopulationReader(Protocol):
-    @abstractmethod
-    async def get_one_form_population(
-        self, user_email: UserEmail, form_id: FormId
-    ) -> FormPopulation:
-        raise NotImplementedError
-
     @abstractmethod
     async def get_filtered_form_populations(
         self, user_email: UserEmail, form_id: FormId
@@ -20,10 +14,6 @@ class FormPopulationReader(Protocol):
 
 class FormPopulationSaver(Protocol):
     @abstractmethod
-    async def save_form_population(self, populations: FormPopulation) -> FormPopulation:
-        raise NotImplementedError
-
-    @abstractmethod
     async def bulk_save_form_populations(
         self, populations: list[FormPopulation]
     ) -> list[FormPopulation]:
@@ -32,5 +22,5 @@ class FormPopulationSaver(Protocol):
 
 class UserProvider(Protocol):
     @abstractmethod
-    async def get_user(self, oauth_tocken: OauthToken) -> User:
+    async def get_user(self) -> User:
         raise NotImplementedError

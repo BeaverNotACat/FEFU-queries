@@ -5,7 +5,7 @@ from app.adapters.database.models import FormPopulationODM
 from app.settings import settings
 
 
-class MongodbSessionManager:        
+class MongodbSessionManager:
     async def __aenter__(self):
         self.client = AsyncIOMotorClient(settings.mongodb_url)
         await init_beanie(
@@ -15,4 +15,3 @@ class MongodbSessionManager:
 
     async def __aexit__(self, *args):
         self.client.close()
-

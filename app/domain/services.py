@@ -1,7 +1,6 @@
 from .models import FormPopulation, Parameter, User
 
 
-
 # TODO refactor
 class FormPopulationService:
     @staticmethod

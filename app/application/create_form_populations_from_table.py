@@ -15,7 +15,7 @@ class FormPopulationGateway(FormPopulationSaver, Protocol): ...
 NewFormPopulationsDTO = UploadFile
 
 
-class CreateFormPopulationFromTable(
+class CreateFormPopulationsFromTable(
     Interactor[NewFormPopulationsDTO, list[FormPopulation]]
 ):
     def __init__(
