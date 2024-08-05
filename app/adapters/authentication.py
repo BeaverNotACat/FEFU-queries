@@ -3,8 +3,11 @@ import json
 import httpx
 
 from app.application.gateway import UserProvider
-from app.domain.models import OauthToken, User
+from app.domain.models import User
 from app.domain.services import UserService
+
+
+class AuthenticationError(Exception): ...
 
 
 # TODO Refactor and make normal exception
@@ -12,7 +15,7 @@ class YandexIDAuth(UserProvider):
     URL = "https://login.yandex.ru/info"
     PARAMETERS = {"format": "json"}
 
-    def __init__(self, oauth_token: OauthToken):
+    def __init__(self, oauth_token: str):
         self.token = oauth_token
 
     async def _send_request(self) -> dict:

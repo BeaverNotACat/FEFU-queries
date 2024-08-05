@@ -16,7 +16,7 @@ class IoC(InteractorFactory):
         self.form_population_gateway = FormPopulationGateway()
 
     @contextmanager
-    def match_form_populations( # type: ignore
+    def match_form_populations(  # type: ignore
         self, user_provider: UserProvider
     ) -> Iterator[MatchFormPopulations]:
         yield MatchFormPopulations(
@@ -26,10 +26,10 @@ class IoC(InteractorFactory):
         )
 
     @contextmanager
-    def create_form_populations_from_table( # type: ignore
+    def create_form_populations_from_table(  # type: ignore
         self,
     ) -> Iterator[CreateFormPopulationsFromTable]:
-        yield CreateFormPopulationsFromTable( 
+        yield CreateFormPopulationsFromTable(
             form_population_db_gateway=self.form_population_gateway,
             form_population_service=FormPopulationService(),
         )

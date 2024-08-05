@@ -7,7 +7,6 @@ ParameterId = NewType("ParameterId", str)
 FormId = NewType("FormId", str)
 FormPopulationId = NewType("FormPopulationId", str)
 UserEmail = NewType("UserEmail", str)
-OauthToken = NewType("OauthToken", str)
 
 
 @dataclass(config=ConfigDict(extra="ignore", from_attributes=True))
