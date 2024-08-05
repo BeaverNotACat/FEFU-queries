@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+  window.YaAuthSuggest.init(
+    {
+      client_id: "decde7f956fb4098881bb2f5402ed613",
+      response_type: "token",
+      redirect_uri: "https://beaver.love-this-domen.ru"
+    },
+    "https://beaver.love-this-domen.ru",
+    {view: "default"}
+  )
+    .then(({handler}) => handler())
+    .then(data => console.log('Сообщение с токеном', data))
+    .catch(error => console.log('Обработка ошибки', error))
+</script>
+{% endblock %}
