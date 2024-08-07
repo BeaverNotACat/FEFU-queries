@@ -1,0 +1,23 @@
+version: 2.26.1
+name: fefu-queries
+
+services:
+  web:
+    restart: always
+    build: ./
+    environment:
+      MONGO_HOST: fefu-queries-mongo
+      MONGO_USER: root
+      MONGO_PASSWORD: password
+      MONGO_DATABASE: fefu-queries
+    ports:
+      - 8000:8000
+
+  mongo:
+    image: mongo
+    container_name: fefu-queries-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: fefu-queries

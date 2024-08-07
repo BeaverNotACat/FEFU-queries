@@ -30,7 +30,7 @@ class AuthenticationMiddleware(AbstractAuthenticationMiddleware):
 auth_mw = DefineMiddleware(AuthenticationMiddleware)
 
 
-async def user_manager_dependency(
+async def user_provider_dependency(
     request: Request[YandexIDAuth, None, State],
 ) -> YandexIDAuth:
     return request.user

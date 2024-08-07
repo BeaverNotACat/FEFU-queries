@@ -8,4 +8,4 @@ COPY pyproject.toml .
 RUN make deps
 
 COPY . .
-CMD make run
+CMD make run-dev
