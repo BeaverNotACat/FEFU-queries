@@ -9,7 +9,6 @@ from app.domain.services import FormPopulationService
 class FormPopulationGateway(FormPopulationReader, Protocol): ...
 
 
-# TODO Refactor with smart DI
 class MatchFormPopulations(Interactor[FormId, list[FormPopulation]]):
     def __init__(
         self,

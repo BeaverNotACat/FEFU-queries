@@ -27,7 +27,7 @@ class AuthenticationMiddleware(AbstractAuthenticationMiddleware):
         return AuthenticationResult(user=YandexIDAuth(auth_header), auth=None)
 
 
-auth_mw = DefineMiddleware(AuthenticationMiddleware)
+auth_middleware = DefineMiddleware(AuthenticationMiddleware)
 
 
 async def user_provider_dependency(

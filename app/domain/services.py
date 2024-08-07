@@ -1,5 +1,6 @@
 from .models import FormPopulation, Parameter, User
 
+
 class ParameterService:
     @staticmethod
     def create(data: dict) -> Parameter:
@@ -34,6 +35,7 @@ class FormPopulationService:
     @staticmethod
     def to_link_path(data: FormPopulation) -> str:
         return f"/{data.form_id}?{ParameterService.to_url_parameters(data.parameters)}"
+
 
 class UserService:
     @staticmethod
