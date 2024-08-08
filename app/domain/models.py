@@ -1,3 +1,4 @@
+from enum import StrEnum
 from typing import NewType, Optional
 
 from pydantic import ConfigDict
@@ -9,9 +10,20 @@ FormPopulationId = NewType("FormPopulationId", str)
 UserEmail = NewType("UserEmail", str)
 
 
+class UserRole(StrEnum):
+    user = "user"
+    admin = "admin"
+
+
 @dataclass(config=ConfigDict(extra="ignore", from_attributes=True))
 class User:
     email: UserEmail
+    role: UserRole
+
+
+@dataclass(config=ConfigDict(extra="ignore", from_attributes=True))
+class YandexUser:
+    default_email: UserEmail
 
 
 @dataclass(config=ConfigDict(extra="ignore", from_attributes=True))

@@ -12,7 +12,7 @@ from app.adapters.authentication import AuthenticationError, YandexIDAuth
 API_KEY_HEADER = "Authorization"
 
 
-class AuthenticationMiddleware(AbstractAuthenticationMiddleware):
+class YandexIDMiddleware(AbstractAuthenticationMiddleware):
     async def authenticate_request(
         self, connection: ASGIConnection
     ) -> AuthenticationResult:
@@ -27,10 +27,10 @@ class AuthenticationMiddleware(AbstractAuthenticationMiddleware):
         return AuthenticationResult(user=YandexIDAuth(auth_header), auth=None)
 
 
-auth_middleware = DefineMiddleware(AuthenticationMiddleware)
+yandex_id_middleware = DefineMiddleware(YandexIDMiddleware)
 
 
-async def user_provider_dependency(
+async def yandex_id_dependency(
     request: Request[YandexIDAuth, None, State],
 ) -> YandexIDAuth:
     return request.user
