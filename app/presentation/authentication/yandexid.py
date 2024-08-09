@@ -20,7 +20,7 @@ class YandexIDMiddleware(AbstractAuthenticationMiddleware):
         if not auth_header:
             raise NotAuthorizedException()
         try:
-            await YandexIDAuth(auth_header).get_user()
+            await YandexIDAuth(auth_header).get_yandex_id()
         except AuthenticationError:
             raise NotAuthorizedException("Your token is mailformed")
 

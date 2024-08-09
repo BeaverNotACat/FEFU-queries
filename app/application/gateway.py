@@ -1,8 +1,10 @@
 from abc import abstractmethod
-from typing import Protocol
+from typing import Any, Protocol
 from uuid import UUID
 
-from app.domain.models import FormId, FormPopulation, User, UserEmail
+from app.domain.models import FormId, FormPopulation, User, UserEmail, YandexUser
+
+_sentinel: Any = object()
 
 
 class FormPopulationReader(Protocol):
@@ -21,8 +23,16 @@ class FormPopulationSaver(Protocol):
         raise NotImplementedError
 
 
+class YandexIDProvider(Protocol):
+    """High level database interface"""
+
+    @abstractmethod
+    async def get_yandex_id(self) -> YandexUser:
+        raise NotImplementedError
+
+
 class UserProvider(Protocol):
-    """Interface for request dependency"""
+    """High level database interface"""
 
     @abstractmethod
     async def get_user(self) -> User:
@@ -30,15 +40,15 @@ class UserProvider(Protocol):
 
 
 class UserReader(Protocol):
-    """Database interface"""
+    """Low level database interface for application layer gateways"""
 
     @abstractmethod
-    async def get_user(self, id: UUID, email: str) -> User:
+    async def get_user(self, id: UUID = _sentinel, email: str = _sentinel) -> User:
         raise NotImplementedError
 
 
 class UserSaver(Protocol):
-    """Database interface"""
+    """Low level database interface for application layer gateways"""
 
     @abstractmethod
     async def save_user(self, user: User) -> User:

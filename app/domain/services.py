@@ -18,7 +18,6 @@ class ParameterService:
         return [Parameter(field=field, answer=answer) for field, answer in data.items()]
 
 
-# TODO refactor
 class FormPopulationService:
     @staticmethod
     def create(data: dict) -> FormPopulation:

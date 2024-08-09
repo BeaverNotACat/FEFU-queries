@@ -1,5 +1,6 @@
 from enum import StrEnum
 from typing import NewType, Optional
+from uuid import UUID
 
 from pydantic import ConfigDict
 from pydantic.dataclasses import dataclass
@@ -17,6 +18,7 @@ class UserRole(StrEnum):
 
 @dataclass(config=ConfigDict(extra="ignore", from_attributes=True))
 class User:
+    id: UUID
     email: UserEmail
     role: UserRole
 
