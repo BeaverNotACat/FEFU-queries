@@ -19,7 +19,7 @@ class InteractorFactory(ABC):
 
     @abstractmethod
     def create_form_populations_from_table(
-        self,
+        self, user_provider: UserProvider
     ) -> ContextManager[CreateFormPopulationsFromTable]:
         raise NotImplementedError
 

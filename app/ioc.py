@@ -31,11 +31,12 @@ class IoC(InteractorFactory):
 
     @contextmanager
     def create_form_populations_from_table(  # type: ignore
-        self,
+        self, user_provider: UserProvider
     ) -> Iterator[CreateFormPopulationsFromTable]:
         yield CreateFormPopulationsFromTable(
             form_population_db_gateway=self.form_population_gateway,
             form_population_service=FormPopulationService(),
+            user_provider=user_provider
         )
 
     @contextmanager
