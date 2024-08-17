@@ -22,6 +22,6 @@ jwt_auth: JWTAuth = JWTAuth(
 
 
 async def user_dependency(
-    request: Request[Authentication, Token, Any]
+    request: Request[Authentication, Token, Any],
 ) -> Authentication:
     return request.user

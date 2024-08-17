@@ -18,7 +18,7 @@ class ListFormPopulations(Controller):
     path = "/forms/{form_id: str}"
     dependencies = {
         "ioc": Provide(interactor_dependency),
-        "auth": Provide(user_dependency)
+        "auth": Provide(user_dependency),
     }
 
     @get()
@@ -33,7 +33,7 @@ class CreateFormPopulations(Controller):
     path = "/forms"
     dependencies = {
         "ioc": Provide(interactor_dependency),
-        "auth": Provide(user_dependency)
+        "auth": Provide(user_dependency),
     }
 
     @post()
