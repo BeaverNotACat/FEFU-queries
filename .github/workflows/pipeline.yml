@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  lint:
+  backend-lint:
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
@@ -20,14 +20,16 @@ jobs:
         python-version: "3.12"
         
     - name: ⬇️ Install dependencies
+      working-directory: ./backend
       run: |
         make dev-deps
 
     - name: 🚨 Lint
+      working-directory: ./backend
       run: |
         make lint
     
-  test:
+  backend-test:
     runs-on: ubuntu-latest
     needs: [lint]
     steps:
@@ -40,14 +42,16 @@ jobs:
         python-version: "3.12"
         
     - name: ⬇️ Install dependencies
+      working-directory: ./backend
       run: |
         make dev-deps
 
     - name: 🚨 Test
+      working-directory: ./backend
       run: |
         make lint
 
-  deploy:
+  backend-deploy:
     name: deploy
     needs: [lint, test]
     runs-on: ubuntu-latest
