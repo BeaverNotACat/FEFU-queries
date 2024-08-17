@@ -6,7 +6,7 @@ from app.adapters.authentication import Authentication, YandexIDAuth
 from app.domain.exceptions import AuthenticationError
 from app.domain.models import FormId, FormPopulation, User
 from app.ioc import IoC
-from app.presentation.authentication.jwt import jwt_auth, retrieve_user_provider
+from app.presentation.authentication.jwt import jwt_auth, user_dependency
 from app.presentation.authentication.yandexid import (
     yandex_id_dependency,
     yandex_id_middleware,
@@ -18,14 +18,14 @@ class ListFormPopulations(Controller):
     path = "/forms/{form_id: str}"
     dependencies = {
         "ioc": Provide(interactor_dependency),
-        "user_provider": Provide(retrieve_user_provider),
+        "auth": Provide(user_dependency)
     }
 
     @get()
     async def list_form_populations(
-        self, ioc: IoC, user_provider: Authentication, form_id: FormId
+        self, ioc: IoC, auth: Authentication, form_id: FormId
     ) -> list[FormPopulation]:
-        with ioc.match_form_populations(user_provider) as action:
+        with ioc.match_form_populations(auth) as action:
             return await action(form_id)
 
 
@@ -33,14 +33,14 @@ class CreateFormPopulations(Controller):
     path = "/forms"
     dependencies = {
         "ioc": Provide(interactor_dependency),
-        "user_provider": Provide(retrieve_user_provider),
+        "auth": Provide(user_dependency)
     }
 
     @post()
     async def list_form_populations(
-        self, ioc: IoC, user_provider: Authentication, populations_table: UploadFile
+        self, ioc: IoC, auth: Authentication, populations_table: UploadFile
     ) -> list[FormPopulation]:
-        with ioc.create_form_populations_from_table(user_provider) as action:
+        with ioc.create_form_populations_from_table(auth) as action:
             return await action(populations_table)
 
 

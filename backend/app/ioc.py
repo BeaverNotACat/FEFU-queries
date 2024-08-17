@@ -36,7 +36,7 @@ class IoC(InteractorFactory):
         yield CreateFormPopulationsFromTable(
             form_population_db_gateway=self.form_population_gateway,
             form_population_service=FormPopulationService(),
-            user_provider=user_provider
+            user_provider=user_provider,
         )
 
     @contextmanager

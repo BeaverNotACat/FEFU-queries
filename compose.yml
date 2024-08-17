@@ -1,11 +1,12 @@
 version: 2.26.1
-name: fefu-queries
+name: fefu-queries-test
 
 services:
-  web:
+  backend:
     restart: always
-    build: ./
+    build: ./backend
     environment:
+      JWT_SECRET: qwerty
       MONGO_HOST: fefu-queries-mongo
       MONGO_USER: root
       MONGO_PASSWORD: password
