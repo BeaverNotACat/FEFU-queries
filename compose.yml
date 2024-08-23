@@ -8,7 +8,8 @@ services:
     depends_on:
       - backend
     environment:
-      REACT_APP_API_URI: "backend:8000"
+      REACT_APP_API_URI: "http://backend:8000"
+      REACT_APP_YANDEX_FORMS_URI: "https://forms.yandex.ru/u/"
     ports:
       - 3000:3000
 
