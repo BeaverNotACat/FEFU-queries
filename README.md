@@ -5,14 +5,12 @@ It's main goal is to reduce the number of incorrect data when surveying students
 > Currently project is under the construction and can change significantly
 ## General
 Service provides authentication with Yandex ID
-
 ## Backend
 Based on clean arcitecture with DDD and hexagonal arcitecture
 ### Stack
 - litestar     API
 - pydantic     Domain layer optimisation
 - beanie ODM   MongoDB ODM
-
 ## Frontend
 Provides UI for the awesome backend :)
 ### Stack
