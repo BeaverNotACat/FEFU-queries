@@ -1,0 +1,13 @@
+# Docker
+docker-compose.yml
+Dockerfile
+.docker
+.dockerignore
+
+# Byte-compiled / optimized / DLL files / Extensions
+**/__pycache__/
+**/*.py[cod]
+*.so
+
+# Poetry
+poetry.lock
