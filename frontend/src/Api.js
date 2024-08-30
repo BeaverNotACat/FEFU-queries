@@ -1,9 +1,12 @@
+import settings from "#settings"
+
+
 class Api {
   async getFormPopulaions(formId, userToken) {
     var response = await fetch(
       `${settings.API_URI}/forms/${formId}`, {
-        headers: { Authorization: userToken }
-      }
+      headers: { Authorization: userToken }
+    }
     );
 
     if (!response.ok) {
@@ -18,10 +21,10 @@ class Api {
     data.append('file', populations_file)
     var response = await fetch(
       `${settings.API_URI}/forms`, {
-        method: 'POST',
-        headers: { Authorization: userToken },
-        body: data
-      }
+      method: 'POST',
+      headers: { Authorization: userToken },
+      body: data
+    }
     );
 
     if (!response.ok) {
@@ -45,3 +48,6 @@ class Api {
     }
   }
 }
+
+
+export default Api

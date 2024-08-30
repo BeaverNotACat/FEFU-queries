@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import settings from "#settings"
+import Api from "#Api"
 
 const Forms = () => {
   const { id } = useParams();
@@ -8,19 +9,7 @@ const Forms = () => {
   const [formLinks, setFormLinks] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        var response = await fetch(settings.API_URI);
-        if (!response.ok) {
-          throw new Error('Responce is not 200 ok')
-        };
-        console.log(response);
-        setFormLinks(await response.json());
-      } catch (err) {
-        console.error(err)
-        setFormLinks([]);
-      }
-    })()
+
   });
 
   return (
