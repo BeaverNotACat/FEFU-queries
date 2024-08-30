@@ -5,8 +5,7 @@ from app.presentation.authentication.jwt import jwt_auth
 from app.presentation.routes import (
     CreateFormPopulations,
     ListFormPopulations,
-    Login,
-    Register,
+    Authentication
 )
 from app.state import ioc_manager
 
@@ -15,5 +14,5 @@ app = Litestar(
     cors_config=cors_config,
     lifespan=[ioc_manager],
     on_app_init=[jwt_auth.on_app_init],
-    route_handlers=[ListFormPopulations, CreateFormPopulations, Login, Register],
+    route_handlers=[ListFormPopulations, CreateFormPopulations, Authentication],
 )

@@ -1,6 +1,7 @@
 from litestar import Controller, Response, get, post
 from litestar.datastructures import UploadFile
 from litestar.di import Provide
+from litestar.security.jwt import Token
 
 from app.adapters.authentication import Authentication, YandexIDAuth
 from app.domain.exceptions import AuthenticationError
@@ -37,15 +38,15 @@ class CreateFormPopulations(Controller):
     }
 
     @post()
-    async def list_form_populations(
+    async def create_form_populations(
         self, ioc: IoC, auth: Authentication, populations_table: UploadFile
     ) -> list[FormPopulation]:
         with ioc.create_form_populations_from_table(auth) as action:
             return await action(populations_table)
 
 
-class Login(Controller):
-    path = "/login"
+class Authentication(Controller):
+    path = "/authenticate"
     middleware = [yandex_id_middleware]
     dependencies = {
         "ioc": Provide(interactor_dependency),
@@ -53,27 +54,11 @@ class Login(Controller):
     }
 
     @post()
-    async def login(self, ioc: IoC, yandex_id_auth: YandexIDAuth) -> Response[User]:
+    async def authenticate(self, ioc: IoC, yandex_id_auth: YandexIDAuth) -> Response[User]:
         try:
             with ioc.login_user(yandex_id_auth) as action:
                 user = await action()
-                return jwt_auth.login(identifier=str(user.id))
         except AuthenticationError:
             with ioc.create_user(yandex_id_auth) as action:
                 user = await action()
-                return jwt_auth.login(identifier=str(user.id))
-
-
-class Register(Controller):
-    path = "/register"
-    middleware = [yandex_id_middleware]
-    dependencies = {
-        "ioc": Provide(interactor_dependency),
-        "yandex_id_auth": Provide(yandex_id_dependency),
-    }
-
-    @post()
-    async def register(self, ioc: IoC, yandex_id_auth: YandexIDAuth) -> Response[User]:
-        with ioc.create_user(yandex_id_auth) as action:
-            user = await action()
-            return jwt_auth.login(identifier=str(user.id))
+        return jwt_auth.login(identifier=str(user.id), response_body=user)

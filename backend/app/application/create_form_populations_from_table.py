@@ -13,7 +13,7 @@ from app.domain.services import FormPopulationService
 class FormPopulationGateway(FormPopulationSaver, Protocol): ...
 
 
-NewFormPopulationsDTO = UploadFile
+type NewFormPopulationsDTO = UploadFile
 
 
 class CreateFormPopulationsFromTable(

@@ -25,7 +25,7 @@ class YandexIDAuth(YandexIDProvider):
                 headers={"Authorization": self.token},
             )
             responce.raise_for_status()
-            return json.loads(responce.json())
+            return responce.json()
         except httpx.HTTPStatusError:
             raise AuthenticationError("Unable to authorize with Yandex ID")
 

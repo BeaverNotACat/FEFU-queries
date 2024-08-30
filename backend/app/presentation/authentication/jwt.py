@@ -17,7 +17,7 @@ async def retrieve_user_provider(
 jwt_auth: JWTAuth = JWTAuth(
     token_secret=settings.JWT_SECRET,
     retrieve_user_handler=retrieve_user_provider,
-    exclude=["/schema", "/login", "/register"],
+    exclude=["/schema", "/authenticate"],
 )
 
 

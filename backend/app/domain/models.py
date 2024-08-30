@@ -18,9 +18,9 @@ class UserRole(StrEnum):
 
 @dataclass(config=ConfigDict(extra="ignore", from_attributes=True))
 class User:
-    id: UUID
     email: UserEmail
     role: UserRole
+    id: UUID | None = None
 
 
 @dataclass(config=ConfigDict(extra="ignore", from_attributes=True))

@@ -1,7 +1,7 @@
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.adapters.database.models import FormPopulationODM
+from app.adapters.database.models import FormPopulationODM, UserODM
 from app.settings import settings
 
 
@@ -10,7 +10,7 @@ class MongodbSessionManager:
         self.client = AsyncIOMotorClient(settings.mongodb_url)
         await init_beanie(
             database=self.client.get_database(settings.MONGO_DATABASE),
-            document_models=[FormPopulationODM],
+            document_models=[FormPopulationODM, UserODM],
         )
 
     async def __aexit__(self, *args):

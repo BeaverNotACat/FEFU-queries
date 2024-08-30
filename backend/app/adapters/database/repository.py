@@ -57,9 +57,9 @@ class UserGateway(UserReader, UserSaver):
             query = self.model.find()
 
             if id is not _sentinel:
-                query = query.find(self.model.id == id)
+                query = self.model.find(self.model.id == id)
             if email is not _sentinel:
-                query = query.find(self.model.email == email)
+                query = self.model.find(self.model.email == email)
 
             result = await query.first_or_none()
             if not result:
@@ -67,7 +67,11 @@ class UserGateway(UserReader, UserSaver):
             return User(**dict(result))
 
     async def save_user(self, user: User) -> User:
-        model = self.model(**asdict(user))
+        data = asdict(user)
+        if not user.id:
+            del data["id"]
+
+        model = self.model(**data)
         async with self.session:
             await self.model.insert(model)
-        return user  # TODO Get data from db
+        return await self.get_user(email=user.email)
