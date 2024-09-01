@@ -22,7 +22,7 @@ jobs:
     - name: ⬇️ Install dependencies
       working-directory: ./backend
       run: |
-        make dev-deps
+        make deps-dev
 
     - name: 🚨 Lint
       working-directory: ./backend
@@ -44,7 +44,7 @@ jobs:
     - name: ⬇️ Install dependencies
       working-directory: ./backend
       run: |
-        make dev-deps
+        make deps
 
     - name: 🚨 Test
       working-directory: ./backend
