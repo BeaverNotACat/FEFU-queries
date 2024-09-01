@@ -38,4 +38,4 @@ class APIAuth(APIUserProvider):
         self.token = token
 
     async def get_user(self) -> User:
-        return await UserGateway().get_user(id=UUID(Token.sub))
+        return await UserGateway().get_user(id=UUID(self.token.sub))

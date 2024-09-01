@@ -6,7 +6,7 @@ from app.adapters.database.connection import MongodbSessionManager
 from app.adapters.database.models import FormPopulationODM, UserODM
 from app.application.gateway import (FormPopulationReader, FormPopulationSaver,
                                      UserReader, UserSaver)
-from app.domain.exceptions import AuthenticationError
+from app.domain.exceptions import UserDoesNotExist
 from app.domain.models import FormId, FormPopulation, User, UserEmail
 
 _sentinel: Any = object()
@@ -36,9 +36,6 @@ class FormPopulationGateway(FormPopulationReader, FormPopulationSaver):
         async with self.session:
             await self.model.insert_many(models)
         return populations  # TODO Get data from db
-
-
-class UserDoesNotExist(AuthenticationError): ...
 
 
 class UserGateway(UserReader, UserSaver):

@@ -6,7 +6,7 @@ from litestar.params import Body
 from litestar.di import Provide
 
 from app.adapters.authentication import APIAuth, YandexIDAuth
-from app.domain.exceptions import AuthenticationError
+from app.domain.exceptions import UserDoesNotExist
 from app.domain.models import FormId, FormPopulation, User
 from app.ioc import IoC
 from app.presentation.authentication.api import api_auth_dependency, api_auth
@@ -65,7 +65,7 @@ class Authentication(Controller):
         try:
             with ioc.login_user(yandex_id_auth) as action:
                 user = await action()
-        except AuthenticationError:
+        except UserDoesNotExist:
             with ioc.create_user(yandex_id_auth) as action:
                 user = await action()
         return api_auth.login(identifier=str(user.id), response_body=user)
