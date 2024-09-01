@@ -4,12 +4,8 @@ from uuid import UUID
 
 from app.adapters.database.connection import MongodbSessionManager
 from app.adapters.database.models import FormPopulationODM, UserODM
-from app.application.gateway import (
-    FormPopulationReader,
-    FormPopulationSaver,
-    UserReader,
-    UserSaver,
-)
+from app.application.gateway import (FormPopulationReader, FormPopulationSaver,
+                                     UserReader, UserSaver)
 from app.domain.exceptions import AuthenticationError
 from app.domain.models import FormId, FormPopulation, User, UserEmail
 

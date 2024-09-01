@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from app.application.gateway import FormPopulationReader, UserProvider
+from app.application.gateway import APIUserProvider, FormPopulationReader
 from app.application.interactor import Interactor
 from app.domain.models import FormId, FormPopulation
 from app.domain.services import FormPopulationService
@@ -14,7 +14,7 @@ class MatchFormPopulations(Interactor[FormId, list[FormPopulation]]):
         self,
         form_population_db_gateway: FormPopulationGateway,
         form_population_service: FormPopulationService,
-        user_provider: UserProvider,
+        user_provider: APIUserProvider,
     ) -> None:
         self.form_population_db_gateway = form_population_db_gateway
         self.form_population_service = form_population_service

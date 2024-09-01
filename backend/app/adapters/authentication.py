@@ -1,16 +1,15 @@
-import json
 from uuid import UUID
 
 import httpx
 from litestar.security.jwt import Token
 
 from app.adapters.database.repository import UserGateway
-from app.application.gateway import UserProvider, YandexIDProvider
+from app.application.gateway import APIUserProvider, YandexUserProvider
 from app.domain.exceptions import AuthenticationError
 from app.domain.models import User, YandexUser
 
 
-class YandexIDAuth(YandexIDProvider):
+class YandexIDAuth(YandexUserProvider):
     URL = "https://login.yandex.ru/info"
     PARAMETERS = {"format": "json"}
 
@@ -29,12 +28,12 @@ class YandexIDAuth(YandexIDProvider):
         except httpx.HTTPStatusError:
             raise AuthenticationError("Unable to authorize with Yandex ID")
 
-    async def get_yandex_id(self) -> YandexUser:
+    async def get_user(self) -> YandexUser:
         user = await self._autenthicate()
         return YandexUser(**user)
 
 
-class Authentication(UserProvider):
+class APIAuth(APIUserProvider):
     def __init__(self, token: Token):
         self.token = token
 

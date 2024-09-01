@@ -1,11 +1,8 @@
 from litestar.connection import ASGIConnection, Request
 from litestar.datastructures.state import State
 from litestar.exceptions import NotAuthorizedException
-from litestar.middleware import (
-    AbstractAuthenticationMiddleware,
-    AuthenticationResult,
-    DefineMiddleware,
-)
+from litestar.middleware import (AbstractAuthenticationMiddleware,
+                                 AuthenticationResult, DefineMiddleware)
 
 from app.adapters.authentication import AuthenticationError, YandexIDAuth
 
@@ -20,8 +17,8 @@ class YandexIDMiddleware(AbstractAuthenticationMiddleware):
         if not auth_header:
             raise NotAuthorizedException()
         try:
-            await YandexIDAuth(auth_header).get_yandex_id()
-        except AuthenticationError as err:
+            await YandexIDAuth(auth_header).get_user()
+        except AuthenticationError:
             raise NotAuthorizedException("Your token is mailformed")
 
         return AuthenticationResult(user=YandexIDAuth(auth_header), auth=None)

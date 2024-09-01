@@ -2,7 +2,8 @@ from abc import abstractmethod
 from typing import Any, Protocol
 from uuid import UUID
 
-from app.domain.models import FormId, FormPopulation, User, UserEmail, YandexUser
+from app.domain.models import (FormId, FormPopulation, User, UserEmail,
+                               YandexUser)
 
 _sentinel: Any = object()
 
@@ -23,15 +24,15 @@ class FormPopulationSaver(Protocol):
         raise NotImplementedError
 
 
-class YandexIDProvider(Protocol):
+class YandexUserProvider(Protocol):
     """High level database interface"""
 
     @abstractmethod
-    async def get_yandex_id(self) -> YandexUser:
+    async def get_user(self) -> YandexUser:
         raise NotImplementedError
 
 
-class UserProvider(Protocol):
+class APIUserProvider(Protocol):
     """High level database interface"""
 
     @abstractmethod

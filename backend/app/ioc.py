@@ -2,11 +2,10 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 
 from app.adapters.database.repository import FormPopulationGateway, UserGateway
-from app.application.create_form_populations_from_table import (
-    CreateFormPopulationsFromTable,
-)
+from app.application.create_form_populations_from_table import \
+    CreateFormPopulationsFromTable
 from app.application.create_user import CreateUser
-from app.application.gateway import UserProvider, YandexIDProvider
+from app.application.gateway import APIUserProvider, YandexUserProvider
 from app.application.login_user import LoginUser
 from app.application.match_form_population import MatchFormPopulations
 from app.domain.services import FormPopulationService, UserService
@@ -21,7 +20,7 @@ class IoC(InteractorFactory):
 
     @contextmanager
     def match_form_populations(  # type: ignore
-        self, user_provider: UserProvider
+        self, user_provider: APIUserProvider
     ) -> Iterator[MatchFormPopulations]:
         yield MatchFormPopulations(
             form_population_db_gateway=self.form_population_gateway,
@@ -31,7 +30,7 @@ class IoC(InteractorFactory):
 
     @contextmanager
     def create_form_populations_from_table(  # type: ignore
-        self, user_provider: UserProvider
+        self, user_provider: APIUserProvider
     ) -> Iterator[CreateFormPopulationsFromTable]:
         yield CreateFormPopulationsFromTable(
             form_population_db_gateway=self.form_population_gateway,
@@ -40,13 +39,15 @@ class IoC(InteractorFactory):
         )
 
     @contextmanager
-    def login_user(self, yandex_id_provider: YandexIDProvider) -> Iterator[LoginUser]:
+    def login_user(self, yandex_id_provider: YandexUserProvider) -> Iterator[LoginUser]:
         yield LoginUser(
             user_db_gateway=self.user_gateway, yandex_id_provider=yandex_id_provider
         )
 
     @contextmanager
-    def create_user(self, yandex_id_provider: YandexIDProvider) -> Iterator[CreateUser]:
+    def create_user(
+        self, yandex_id_provider: YandexUserProvider
+    ) -> Iterator[CreateUser]:
         yield CreateUser(
             user_db_gateway=self.user_gateway,
             user_service=UserService(),

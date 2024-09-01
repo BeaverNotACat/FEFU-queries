@@ -3,7 +3,7 @@ from typing import Protocol
 
 from litestar.datastructures import UploadFile
 
-from app.application.gateway import FormPopulationSaver, UserProvider
+from app.application.gateway import APIUserProvider, FormPopulationSaver
 from app.application.interactor import Interactor
 from app.domain.exceptions import NoPermissionError
 from app.domain.models import FormPopulation, UserRole
@@ -23,7 +23,7 @@ class CreateFormPopulationsFromTable(
         self,
         form_population_db_gateway: FormPopulationGateway,
         form_population_service: FormPopulationService,
-        user_provider: UserProvider,
+        user_provider: APIUserProvider,
     ) -> None:
         self.form_population_db_gateway = form_population_db_gateway
         self.form_population_service = form_population_service

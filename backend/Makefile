@@ -2,7 +2,7 @@ deps:
 	python -m pip install poetry
 	poetry install --only main
 
-dev-deps: deps
+deps-dev: deps
 	poetry install
 
 lint:
@@ -10,9 +10,9 @@ lint:
 	poetry run mypy app/ --enable-incomplete-feature=NewGenericSyntax
 
 format:
-	black app/
-	isort app/
-	ruff format app/
+	poetry run ruff format app/
+	poetry run black app/
+	poetry run isort app/
 
 test:
 	echo "WIP"
