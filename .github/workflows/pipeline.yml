@@ -49,7 +49,7 @@ jobs:
     - name: 🚨 Test
       working-directory: ./backend
       run: |
-        make lint
+        make test
 
   backend-deploy:
     name: deploy
