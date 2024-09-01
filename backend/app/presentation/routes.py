@@ -1,5 +1,8 @@
+from typing import Annotated
 from litestar import Controller, Response, get, post
 from litestar.datastructures import UploadFile
+from litestar.enums import RequestEncodingType
+from litestar.params import Body
 from litestar.di import Provide
 
 from app.adapters.authentication import APIAuth, YandexIDAuth
@@ -7,8 +10,10 @@ from app.domain.exceptions import AuthenticationError
 from app.domain.models import FormId, FormPopulation, User
 from app.ioc import IoC
 from app.presentation.authentication.api import api_auth_dependency, api_auth
-from app.presentation.authentication.yandexid import (yandex_id_dependency,
-                                                      yandex_id_middleware)
+from app.presentation.authentication.yandexid import (
+    yandex_id_dependency,
+    yandex_id_middleware,
+)
 from app.presentation.dependencies import interactor_dependency
 
 
@@ -36,10 +41,13 @@ class CreateFormPopulations(Controller):
 
     @post()
     async def create_form_populations(
-        self, ioc: IoC, auth: APIAuth, populations_table: UploadFile
+        self,
+        ioc: IoC,
+        auth: APIAuth,
+        data: Annotated[UploadFile, Body(media_type=RequestEncodingType.MULTI_PART)],
     ) -> list[FormPopulation]:
         with ioc.create_form_populations_from_table(auth) as action:
-            return await action(populations_table)
+            return await action(data)
 
 
 class Authentication(Controller):
